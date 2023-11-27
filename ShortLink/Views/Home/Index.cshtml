@@ -1,0 +1,48 @@
+﻿@model IEnumerable<RecordViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h2>References table</h2>
+    <hr />
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-sm" aria-describedby="table-description">
+            <caption id="table-description">List of Records</caption>
+            <thead>
+                <tr>
+                    <th>Long URL</th>
+                    <th>Short URL</th>
+                    <th>Creation Date</th>
+                    <th>Click Count</th>
+                    <th style="width: 150px;">Actions</th>
+                </tr>
+            </thead>
+            @if (Model.Count() != 0)
+            {
+                foreach (var a in Model)
+                {
+                    <tr>
+                        <td class="d-md-table-cell">@a.LongUrl</td>
+                        <td class="d-md-table-cell">
+                            <a asp-controller="Home" asp-action="RedirectToLongUrl" asp-route-id="@a.Id">@a.ShortUrl</a>
+                        </td>
+                        <td class="d-md-table-cell" style="min-width: 100px; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@a.DateTime</td>
+                        <td class="d-md-table-cell">@a.ClickCount</td>
+                        <td style="width: 150px;">
+                            <a asp-controller="Home" asp-action="ModifyRecord" asp-route-id="@a.Id"> Edit |</a>
+                            <a asp-controller="Home" asp-action="DeleteRecord" asp-route-id="@a.Id"> Delete </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+<br />
+<div>
+    <a class="btn btn-primary float-left" asp-controller="Home" asp-action="AddRecord">Add Record</a>
+</div>
+
